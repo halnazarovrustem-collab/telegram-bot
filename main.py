@@ -51,6 +51,7 @@ def do_search(query):
     ydl_opts = {
         "quiet": True,
         "cookiefile": "cookies.txt",
+        "cookiefile": "cookies.txt",
         "no_warnings": True,
         "skip_download": True,
         "extract_flat": True,
@@ -137,6 +138,7 @@ async def handle_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 def fetch_formats(url):
     ydl_opts = {"quiet": True,
+        "cookiefile": "cookies.txt",
         "cookiefile": "cookies.txt", "no_warnings": True, "skip_download": True}
     with yt_dlp.YoutubeDL(ydl_opts) as ydl:
         return ydl.extract_info(url, download=False)
@@ -148,6 +150,7 @@ def download_video(url, quality):
             "outtmpl": "/tmp/%(id)s.%(ext)s",
             "quiet": True,
         "cookiefile": "cookies.txt",
+        "cookiefile": "cookies.txt",
             "postprocessors": [{"key": "FFmpegExtractAudio", "preferredcodec": "mp3"}],
         }
     else:
@@ -156,6 +159,7 @@ def download_video(url, quality):
             "format": f"bestvideo[height<={h}]+bestaudio/best[height<={h}]",
             "outtmpl": "/tmp/%(id)s.%(ext)s",
             "quiet": True,
+        "cookiefile": "cookies.txt",
         "cookiefile": "cookies.txt",
             "merge_output_format": "mp4",
         }

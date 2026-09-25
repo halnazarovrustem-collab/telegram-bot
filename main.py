@@ -5,6 +5,28 @@ from telegram.ext import Application, CommandHandler, MessageHandler, CallbackQu
 import yt_dlp
 import asyncio
 
+
+# === HEALTH SERVER (Render Web Service için) ===
+import threading
+from http.server import HTTPServer, BaseHTTPRequestHandler
+
+class HealthHandler(BaseHTTPRequestHandler):
+    def do_GET(self):
+        self.send_response(200)
+        self.end_headers()
+        self.wfile.write(b"OK")
+    def log_message(self, *args):
+        pass
+
+def run_health_server():
+    port = int(os.environ.get("PORT", 8080))
+    server = HTTPServer(("0.0.0.0", port), HealthHandler)
+    print(f"Health server port {port} dinliyor...")
+    server.serve_forever()
+
+threading.Thread(target=run_health_server, daemon=True).start()
+# === HEALTH SERVER SON ===
+
 logging.basicConfig(level=logging.INFO)
 TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN", "")
 
